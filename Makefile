@@ -1,8 +1,8 @@
 
-DOCK_COM = sudo docker-compose
-DOCK = sudo docker
+DOCK_COM = docker-compose
+DOCK = docker
 USER = asaadi
-RM = sudo /usr/bin/rm -rf
+RM = /usr/bin/rm -rf
 YML = ./srcs/docker-compose.yaml
 
 all: setup build create_start
@@ -35,9 +35,9 @@ display:
 	@echo "\n"
 	@$(DOCK_COM) -f $(YML) images
 	@echo "\n"
-	@sudo docker ps
+	@docker ps
 	@echo "\n"
-	@sudo docker images
+	@docker images
 	@echo " \033[1;32m\tdone\033[0m"
 
 clean:
