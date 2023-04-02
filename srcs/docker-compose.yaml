@@ -1,0 +1,84 @@
+version: "3.9"
+
+services:
+# MariaDB
+ mariadb:
+  build: ./requirements/mariadb/
+  image: mariadb
+  container_name: mariadb
+  networks:
+   - mynet
+  volumes:
+   - database_volume:/var/lib/mysql
+  env_file:
+   - ./.env
+  restart: always
+# nginx
+ nginx:
+  build: ./requirements/nginx/
+  image: nginx
+  container_name: nginx
+  ports:
+   - "443:443"
+  networks:
+   - mynet
+  volumes:
+   - wordpress_volume:/www/wordpress
+  #  - /home/asaadis/data/phpmyadmin-data:/www/phpmyadmin
+  restart: always
+  # depends_on:
+  #  - phpmyadmin
+# WordPress
+ wordpress:
+  build: ./requirements/wordpress/
+  image: wordpress
+  container_name: wordpress
+  networks:
+   - mynet
+  volumes:
+   - wordpress_volume:/www/wordpress
+  env_file:
+   - ./.env
+  restart: always
+  depends_on: 
+   - mariadb
+   - nginx
+# phpMyAdmin
+#  phpmyadmin:
+#   build: ./requirements/phpmyadmin/
+#   image: phpmyadmin
+#   container_name: phpmyadmin
+#   networks:
+#    - mynet
+#   ports:
+#    - 5000:5000
+#   volumes:
+#    - /home/asaadis/data/phpmyadmin-data:/www/phpmyadmin
+#   restart: always
+#   depends_on:
+#    - mariadb
+#   env_file:
+#    - ./.env
+
+volumes:
+ database_volume:
+  driver: local
+  driver_opts:
+   o: bind
+   type: none
+   device: ${HOME}/data/db-data
+ wordpress_volume:
+  driver: local
+  driver_opts:
+   o: bind
+   type: none
+   device: ${HOME}/data/wp-data
+#  phpmyadmin_volume:
+#   driver: local
+#   driver_opts:
+#    o: bind
+#    type: none
+#    device: ${HOME}/data/phpmyadmin-data
+
+networks:
+ mynet:
