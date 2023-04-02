@@ -24,10 +24,9 @@ services:
    - mynet
   volumes:
    - wordpress_volume:/www/wordpress
-  #  - /home/asaadis/data/phpmyadmin-data:/www/phpmyadmin
+   - phpmyadmin_volume:/www/phpmyadmin
   restart: always
-  # depends_on:
-  #  - phpmyadmin
+
 # WordPress
  wordpress:
   build: ./requirements/wordpress/
@@ -43,22 +42,21 @@ services:
   depends_on: 
    - mariadb
    - nginx
+   
 # phpMyAdmin
-#  phpmyadmin:
-#   build: ./requirements/phpmyadmin/
-#   image: phpmyadmin
-#   container_name: phpmyadmin
-#   networks:
-#    - mynet
-#   ports:
-#    - 5000:5000
-#   volumes:
-#    - /home/asaadis/data/phpmyadmin-data:/www/phpmyadmin
-#   restart: always
-#   depends_on:
-#    - mariadb
-#   env_file:
-#    - ./.env
+ phpmyadmin:
+  build: ./requirements/phpmyadmin/
+  image: phpmyadmin
+  container_name: phpmyadmin
+  networks:
+   - mynet
+  volumes:
+   - phpmyadmin_volume:/www/phpmyadmin
+  restart: always
+  depends_on:
+   - mariadb
+  env_file:
+   - ./.env
 
 volumes:
  database_volume:
@@ -73,12 +71,12 @@ volumes:
    o: bind
    type: none
    device: ${HOME}/data/wp-data
-#  phpmyadmin_volume:
-#   driver: local
-#   driver_opts:
-#    o: bind
-#    type: none
-#    device: ${HOME}/data/phpmyadmin-data
+ phpmyadmin_volume:
+  driver: local
+  driver_opts:
+   o: bind
+   type: none
+   device: ${HOME}/data/phpmyadmin-data
 
 networks:
  mynet:

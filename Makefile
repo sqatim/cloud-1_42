@@ -2,7 +2,7 @@
 DOCK_COM = docker-compose
 DOCK = docker
 USER = asaadi
-RM = /usr/bin/rm -rf
+RM = sudo /usr/bin/rm -rf
 YML = ./srcs/docker-compose.yaml
 
 all: setup build create_start

@@ -19,6 +19,4 @@ ADD     ./tools/object-cache.php /wordpress/wp-content/
 COPY    ./tools/run.sh /
 RUN     chmod +x /run.sh
 
-EXPOSE  9000
-
 ENTRYPOINT ["/bin/sh", "run.sh"]
