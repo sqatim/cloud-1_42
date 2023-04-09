@@ -1,0 +1,56 @@
+---
+- name: Setup
+  hosts: cloud_1
+  # become: true
+
+  tasks:
+    - name: Install dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    # - name: Add user to Docker group
+    #   user:
+    #     name: "{{ ansible_user }}"
+    #     groups: docker
+
+    - name: Install docker-compose from official github repo
+      get_url:
+        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+
+    - name: Create directory on remote host
+      file:
+        path: /home/asaadis/cloud-1
+        state: directory
+
+    - name: Copy directory to remote host
+      copy:
+        src: /Users/asaadi/Desktop/cloud-1_42/
+        dest: /home/asaadis/cloud-1
+
+    - name: Run
+      make:
+        chdir: /home/asaadis/cloud-1
+        target: all

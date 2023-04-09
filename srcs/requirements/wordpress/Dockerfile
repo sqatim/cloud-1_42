@@ -13,8 +13,6 @@ RUN     wget http://wordpress.org/latest.tar.gz; \
 
 RUN		rm /wordpress/wp-config-sample.php
 COPY	./conf/wp-config.php /wordpress
-ADD     ./tools/redis-cache.tar.gz /wordpress/wp-content/plugins/
-ADD     ./tools/object-cache.php /wordpress/wp-content/
 
 COPY    ./tools/run.sh /
 RUN     chmod +x /run.sh
