@@ -64,19 +64,19 @@ volumes:
   driver_opts:
    o: bind
    type: none
-   device: ${HOME}/data/db-data
+   device: /home/ubuntu/data/db-data
  wordpress_volume:
   driver: local
   driver_opts:
    o: bind
    type: none
-   device: ${HOME}/data/wp-data
+   device: /home/ubuntu/data/wp-data
  phpmyadmin_volume:
   driver: local
   driver_opts:
    o: bind
    type: none
-   device: ${HOME}/data/phpmyadmin-data
+   device: /home/ubuntu/data/phpmyadmin-data
 
 networks:
  mynet:

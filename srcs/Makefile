@@ -1,14 +1,14 @@
 
-DOCK_COM = docker-compose
-DOCK = docker
+DOCK_COM = sudo docker-compose
+DOCK = sudo docker
 USER = asaadi
 RM = sudo /usr/bin/rm -rf
-YML = ./srcs/docker-compose.yaml
+YML = ./docker-compose.yaml
 
 all: setup build create_start
 
 setup:
-	@/bin/bash ./srcs/script.sh
+	@/bin/bash ./script.sh
 
 build:
 	@echo " ---->\033[1;34m\tBuilding images... \033[0m"

@@ -1,8 +1,8 @@
 ---
 - name: Setup
   hosts: cloud_1
-  # become: true
-
+  remote_user: ubuntu
+  become: true
   tasks:
     - name: Install dependencies
       apt:
@@ -31,7 +31,7 @@
 
     # - name: Add user to Docker group
     #   user:
-    #     name: "{{ ansible_user }}"
+    #     name: ubuntu
     #     groups: docker
 
     - name: Install docker-compose from official github repo
@@ -42,15 +42,20 @@
 
     - name: Create directory on remote host
       file:
-        path: /home/asaadis/cloud-1
+        path: /home/ubuntu/cloud-1
         state: directory
+        owner: ubuntu
+        group: ubuntu
+        recurse: yes
 
     - name: Copy directory to remote host
       copy:
-        src: /Users/asaadi/Desktop/cloud-1_42/
-        dest: /home/asaadis/cloud-1
+        src: /Users/asaadi/Desktop/cloud-1_42/srcs/
+        dest: /home/ubuntu/cloud-1
 
-    - name: Run
-      make:
-        chdir: /home/asaadis/cloud-1
-        target: all
+    - name: Run make all
+      become_user: ubuntu
+      command: make all
+      args:
+        chdir: /home/ubuntu/cloud-1
+
