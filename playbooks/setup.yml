@@ -1,5 +1,5 @@
 ---
-- name: Setup
+- name: Setup EC2 Instance
   hosts: cloud_1
   remote_user: ubuntu
   become: true
@@ -12,6 +12,8 @@
           - curl
           - gnupg-agent
           - software-properties-common
+          - make
+          - python3
         state: present
 
     - name: Add Docker GPG key
@@ -29,33 +31,8 @@
         name: docker-ce
         state: present
 
-    # - name: Add user to Docker group
-    #   user:
-    #     name: ubuntu
-    #     groups: docker
-
     - name: Install docker-compose from official github repo
       get_url:
         url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
         dest: /usr/local/bin/docker-compose
         mode: 'u+x,g+x'
-
-    - name: Create directory on remote host
-      file:
-        path: /home/ubuntu/cloud-1
-        state: directory
-        owner: ubuntu
-        group: ubuntu
-        recurse: yes
-
-    - name: Copy directory to remote host
-      copy:
-        src: /Users/asaadi/Desktop/cloud-1_42/srcs/
-        dest: /home/ubuntu/cloud-1
-
-    - name: Run make all
-      become_user: ubuntu
-      command: make all
-      args:
-        chdir: /home/ubuntu/cloud-1
-

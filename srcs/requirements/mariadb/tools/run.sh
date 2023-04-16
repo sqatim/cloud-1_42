@@ -10,7 +10,7 @@ if ! ls /var/lib/mysql/* ; then
     mysql -u root -e "GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DB_USER'@'%';";\
     mysql -u root -e "FLUSH PRIVILEGES;";
 	sed -i "s|https://localhost|https://${DOMAIN_NAME}|g" /$DATABASE_NAME.sql
-	cd /var/lib/mysql ; mysql -u root $DATABASE_NAME < /$DATABASE_NAME.sql; rm /$DATABASE_NAME.sql
+	cd /var/lib/mysql ; mysql -u root $DATABASE_NAME < /$DATABASE_NAME.sql;
     mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"; \
 	/etc/init.d/mariadb stop 2> /dev/null ;
 

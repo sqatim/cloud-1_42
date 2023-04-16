@@ -1,0 +1,12 @@
+---
+  - name: Setup EC2 Instance
+    import_playbook: ./playbooks/setup.yml
+    tags: setup
+  - name: Remote folder structure
+    import_playbook: ./playbooks/folder_structure.yml
+    tags: folder_structure
+  - name: Run services in remote host
+    import_playbook: ./playbooks/run.yml
+    tags: run
+    
+

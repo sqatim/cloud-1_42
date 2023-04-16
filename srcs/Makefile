@@ -51,7 +51,7 @@ fclean: clean
 	@echo " ---->\033[1;34m\tRemoving host-volumes... \033[0m"
 	@$(RM) ~/data/wp-data/*
 	@$(RM) ~/data/db-data/*
-	@$(RM) ~/data/influxdb-data/*
+	@$(RM) ~/data/phpmyadmin-data/*
 	@echo " \033[1;32m\tdone\033[0m"
 
 re: fclean all

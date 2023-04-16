@@ -1,0 +1,19 @@
+---
+- name: Remote folder structure
+  hosts: cloud_1
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Create directory on remote host
+      file:
+        path: /home/ubuntu/cloud-1
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        recurse: yes
+
+    - name: Copy directory to remote host
+      copy:
+        src: ../srcs/
+        dest: /home/ubuntu/cloud-1
+        

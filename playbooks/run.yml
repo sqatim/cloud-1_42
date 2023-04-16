@@ -1,0 +1,11 @@
+---
+- name: Run services in remote host
+  hosts: cloud_1
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Run make all
+      become_user: ubuntu
+      command: make all
+      args:
+        chdir: /home/ubuntu/cloud-1
